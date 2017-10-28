@@ -38,7 +38,15 @@ def prime_factorization(n):
 def divisors(n):
     pf = prime_factorization(n)
     return set(reduce(mul, subset, 1) for k in range(0, len(pf) + 1) for subset in itertools.combinations(pf, k))
-    
+
+def proper_divisors(n):
+    divs = divisors(n)
+    divs.remove(n)
+    return divs 
+
+def text_to_int_array(s):
+  return [[int(n) for n in line.split(' ')] for line in s.split('\n') if line]
+
 if __name__ == '__main__':
     print (primes_up_to(19))
     print (prime_factorization(28))

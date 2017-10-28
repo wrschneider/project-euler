@@ -1,5 +1,6 @@
 from functools import reduce 
 from operator import mul
+from utils import text_to_int_array
 
 s = """
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
@@ -23,7 +24,7 @@ s = """
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48
 """
-arr = [[int(n) for n in line.split(' ')] for line in s.split('\n') if line]
+arr = text_to_int_array(s)
 n = 4
 deltas = [(-1, 1), (0, 1), (1, 1), (1, 0)]
 
