@@ -47,6 +47,9 @@ def proper_divisors(n):
 def text_to_int_array(s):
   return [[int(n) for n in line.split(' ')] for line in s.split('\n') if line]
 
+def is_palindrome(s):
+  return s == s[::-1]
+
 if __name__ == '__main__':
     print (primes_up_to(19))
     print (prime_factorization(28))
