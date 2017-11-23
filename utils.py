@@ -50,6 +50,9 @@ def text_to_int_array(s):
 def is_palindrome(s):
   return s == s[::-1]
 
+def is_pandigital(s):
+    return len(s) == 9 and all(ch in s for ch in '123456789')
+
 if __name__ == '__main__':
     print (primes_up_to(19))
     print (prime_factorization(28))
