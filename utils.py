@@ -1,8 +1,17 @@
 import itertools
+import math
 from functools import reduce
 from operator import mul
 
 primes_cache = []
+
+def is_prime_naive(n):
+  if n == 1: return False
+  if n <= 3: return True
+  if n % 2 == 0: return False
+  for i in range(3, int(math.sqrt(n)) + 1, 2):
+    if n % i == 0: return False
+  return True
 
 def primes_up_to(n):
   if primes_cache:
@@ -50,12 +59,16 @@ def text_to_int_array(s):
 def is_palindrome(s):
   return s == s[::-1]
 
-def is_pandigital(s):
-    return len(s) == 9 and all(ch in s for ch in '123456789')
+def is_pandigital(s, n=9):
+    return len(s) == n and all(ch in s for ch in '123456789'[0:n])
 
 if __name__ == '__main__':
+    print(is_pandigital("123456789"))
+    print(is_pandigital("12345678"))  
+    print(is_pandigital("12345678", 8))
+    print(is_prime_naive(6))
+    print(is_prime_naive(13))
     print (primes_up_to(19))
     print (prime_factorization(28))
     print (divisors(28))
     print (divisors(56))
-    
