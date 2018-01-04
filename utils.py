@@ -62,7 +62,11 @@ def is_palindrome(s):
 def is_pandigital(s, n=9):
     return len(s) == n and all(ch in s for ch in '123456789'[0:n])
 
+def ncr(n, r):
+  return math.factorial(n) // (math.factorial(r) * math.factorial(n-r))
+
 if __name__ == '__main__':
+    print(ncr(5, 3))
     print(is_pandigital("123456789"))
     print(is_pandigital("12345678"))  
     print(is_pandigital("12345678", 8))
