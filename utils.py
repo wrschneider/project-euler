@@ -5,13 +5,23 @@ from operator import mul
 
 primes_cache = []
 
+def is_prime_naive_inner(n):
+  for i in range(3, int(math.sqrt(n)) + 1, 2):
+    if n % i == 0: return False
+  return True
+
 def is_prime_naive(n):
   if n == 1: return False
   if n <= 3: return True
   if n % 2 == 0: return False
-  for i in range(3, int(math.sqrt(n)) + 1, 2):
-    if n % i == 0: return False
-  return True
+  return is_prime_naive_inner(n)
+
+def is_prime_fermat(n):
+  if n == 1: return False
+  if n <= 3: return True
+  if n % 2 == 0: return False
+  if pow(2, (n-1), n) != 1: return False
+  return is_prime_naive_inner(n)
 
 def primes_up_to(n):
   if primes_cache:
