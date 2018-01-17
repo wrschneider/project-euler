@@ -1,3 +1,4 @@
+from collections import Counter
 import itertools
 import math
 from functools import reduce
@@ -74,6 +75,9 @@ def is_pandigital(s, n=9):
 
 def ncr(n, r):
   return math.factorial(n) // (math.factorial(r) * math.factorial(n-r))
+
+def check_permutation(n1, n2):
+    return Counter(str(n1)) == Counter(str(n2))
 
 if __name__ == '__main__':
     print(ncr(5, 3))
