@@ -1,14 +1,5 @@
 import utils
-
-def gcd(a, b):
-    divisors_a = utils.divisors(a)
-    divisors_b = utils.divisors(b)
-
-    return max(d for d in divisors_a if d in divisors_b)
-
-def lowest_terms(a, b):
-    d = gcd(a, b)
-    return (a // d, b // d)
+from utils import lowest_terms
 
 def equal(a1, b1, a2, b2):
     if a2 == 0 or b2 == 0: return False

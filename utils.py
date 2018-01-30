@@ -1,3 +1,4 @@
+from datetime import datetime
 from collections import Counter
 import itertools
 import math
@@ -5,6 +6,7 @@ from functools import reduce
 from operator import mul
 
 primes_cache = []
+prime_set = set()
 
 def is_prime_naive_inner(n):
   for i in range(3, int(math.sqrt(n)) + 1, 2):
@@ -37,23 +39,37 @@ def primes_up_to(n):
 
 def initialize_primes_cache(n):
     primes_cache.extend(primes_up_to(n))
+    for p in primes_cache:
+      prime_set.add(p)
 
 prime_factor_cache = {}
 
-def prime_factorization(n):
-    if n == 1: return []
+def prime_factorization(n, distinct=False):
     if n in prime_factor_cache:
         return prime_factor_cache[n]
 
+    if n == 1: return []
+
+    if n in prime_set: return[n] # optimization if prime set cached
+
     primes = primes_up_to(n)
-    for p in primes: 
-        if p > n: continue
+
+    for p in primes:
+        if n == p:
+          return [n] # in case prime cache is not initialized
+        if p*p > n: 
+          continue
         if n % p == 0:
-            factors = [p] + prime_factorization(n // p)
+            next_n = n // p
+            if distinct:
+              while next_n % p == 0:
+                next_n = next_n // p
+            factors = [p] + prime_factorization(next_n)
             prime_factor_cache[n] = factors
             return factors
 
-    raise "should never get here"
+    prime_factor_cache[n] = [n]
+    return prime_factor_cache[n] # either n is prime, OR we didn't initialize cache high enough
 
 def divisors(n):
     pf = prime_factorization(n)
@@ -78,6 +94,25 @@ def ncr(n, r):
 
 def check_permutation(n1, n2):
     return Counter(str(n1)) == Counter(str(n2))
+
+def phi(n):  
+    prime_factors = prime_factorization(n, True)
+    denom = reduce(mul, (p for p in prime_factors), 1)
+    num = n * reduce(mul, (p-1 for p in prime_factors), 1)
+    return num // denom
+
+def ratio(n):
+    return n / phi(n) 
+
+def gcd(a, b):
+    divisors_a = divisors(a)
+    divisors_b = divisors(b)
+
+    return max(d for d in divisors_a if d in divisors_b)
+
+def lowest_terms(a, b):
+    d = gcd(a, b)
+    return (a // d, b // d)
 
 if __name__ == '__main__':
     print(ncr(5, 3))
